@@ -9,17 +9,14 @@ MatrixXd P(2,3), sigma(2,3);
 
 
 void df(VectorXd& b, VectorXd& p)
-{        
+{
     VectorXi Ix(1);
     Ix << 0;
-        
+
     VectorXi Iy(1);
     Iy << 1;
-    
-    VectorXd r(2);    
-    r << 0,0;
 
-    b << dlandscape(r, P, sigma, A, Ix), dlandscape(r, P, sigma, A, Iy);
+    b << dlandscape(p, P, sigma, A, Ix), dlandscape(p, P, sigma, A, Iy);
 }
 
 void ddf(MatrixXd& Ai, VectorXd& p)
@@ -44,11 +41,11 @@ int main()
 
     sigma << .1, .3, .2,
              .1, .3, .5;
-    
+
     A << -2, -4, -4;
 
-    p << 0,0;
-    Descent(ddf, df, p, 10000, 1e-30);
+    p << 0,2;
+    Descent(ddf, df, p, 10000, 1e-10);
     cout << p << endl ;
     return 0;
 }
