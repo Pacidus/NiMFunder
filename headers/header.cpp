@@ -1,4 +1,14 @@
 #include "header.hpp"
+/*============================================================================*/
+                                /*Variables*/
+/*============================================================================*/
+
+ifstream init("..\Paysage.init");   /*Fichier d'initialisation*/
+init >> N;                          /*On récupère N dans le fichier*/
+init >> D;                          /*On récupère D dans le fichier*/
+double H[N];      	           	    /*H la "hauteur" des minimas H < 0*/
+MatrixXd Sigma(D,N);	            /*Sigma la matrices des écarts types */
+MatrixXd Pm(D,N);		            /*Pm la matrice des positions des minimas*/
 
 /*============================================================================*/
                                 /*Utilitaires*/
@@ -55,25 +65,6 @@ double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
 
 /*============================================================================*/
 
-
-double landscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A)
-{
-    /*landscape: retourne la valeur du paysage de gaussiennes en la position p*/
-
-    int n = A.size();
-    double Sol = 0;
-    VectorXd Pi(n), sigmai(n);
-    for(int i = 0; i < n; i++)
-    {
-        Pi = P.col(i);
-        sigmai = sigma.col(i);
-        Sol += DGauss(p, Pi, sigmai, A(i));
-    }
-    return Sol;
-}//landscape
-
-/*============================================================================*/
-
 double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorXi& I)
 {
     /*dlandscape: retourne la valeur de la dérivée du paysage de gaussiennes en la position p*/
@@ -94,7 +85,7 @@ double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorX
                                 /*Méthodes*/
 /*============================================================================*/ 
 
-void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon)
+void Descent(VectorXd& p, int i_max, double epsilon)
 {
     /*Descent: aplique une méthode classique pour trouver le minima 
     (équlibre en quasi statique sum(F)=0)*/
@@ -105,11 +96,11 @@ void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), Vecto
     int i = 0;
     do
     {
-	i++; 				//On implémente de 1
-	df(b,p);			//On génère le vécteur de la dérivée première
-	df2 = b.norm();			//On génère la norme de la dérivée première
-	ddf(A,p);			//On génère la matrice des dérivées secondes
-	Sddf = A.sum();		//On génère la somme des derivées secondes
+	i++; 				            //On implémente de 1
+	dPaysage(p,b);			        //On génère le vécteur de la dérivée première
+	df2 = b.norm();			        //On génère la norme de la dérivée première
+	d2Paysage(p,A);			        //On génère la matrice des dérivées secondes
+	Sddf = A.sum();		            //On génère la somme des derivées secondes
 	Sddfa = -A.cwiseAbs().sum();	//On génère la somme de la valeur absolue des dérivées secondes
 	p -= .1*b;
     }

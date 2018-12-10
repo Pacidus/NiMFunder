@@ -8,6 +8,13 @@
 using namespace Eigen;
 using namespace std;
 /*============================================================================*/
+                                /*Variables*/
+/*============================================================================*/
+
+ifstream init;	/*Fichier d'initialisation*/
+int N, D;		/*N le nombre de minima, D le nombre de dimensions*/
+
+/*============================================================================*/
                                 /*Utilitaires*/
 /*============================================================================*/
 
@@ -26,10 +33,6 @@ dont le l'extremum se situe à là position P et à la hauteur A*/
 double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I);
 /*dDGauss: retourne la valeur de la dérivée d'une gaussienne à la position p
 a D dimensions dont le l'extremum se situe à là position P et à la hauteur A*/
-
-double landscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A);
-/*landscape: retourne la valeur du paysage de gaussiennes en la position p*/
-
 
 double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorXi& I);
 /*dlandscape: retourne la valeur de la dérivée du paysage de gaussiennes en la position p*/
