@@ -3,12 +3,22 @@
                                 /*Variables*/
 /*============================================================================*/
 
-ifstream init("..\Paysage.init");   /*Fichier d'initialisation*/
+extern ifstream init("..\Paysage.init");   /*Fichier d'initialisation*/
 init >> N;                          /*On récupère N dans le fichier*/
 init >> D;                          /*On récupère D dans le fichier*/
-double H[N];      	           	    /*H la "hauteur" des minimas H < 0*/
-MatrixXd Sigma(D,N);	            /*Sigma la matrices des écarts types */
-MatrixXd Pm(D,N);		            /*Pm la matrice des positions des minimas*/
+extern double H[N];      	           	    /*H la "hauteur" des minimas H < 0*/
+extern MatrixXd Sigma(D,N);	            /*Sigma la matrices des écarts types */
+extern MatrixXd Pm(D,N);		            /*Pm la matrice des positions des minimas*/
+
+for(int i = 0; i < N; i++)
+{
+    init >> H[i];
+    for(int j = 0; j < D, j++)
+    {
+        init >> Sigma(j,i);
+        init >> Pm(j,i);
+    }
+}
 
 /*============================================================================*/
                                 /*Utilitaires*/

@@ -34,7 +34,7 @@ void dPaysage(VectorXd& p, VectorXd& b)
 
 /*============================================================================*/
 
-void d2Paysage(VectorXd& p, VectorXd& b)
+void d2Paysage(VectorXd& p, MatrixXd& A)
 {
     /*d2Paysage: prend en entrée un vecteur position et une Matrice des dérivées secondes et le remplis*/
     VectorXd I(D);
@@ -45,7 +45,7 @@ void d2Paysage(VectorXd& p, VectorXd& b)
             I.fill(0);
             I(i) += 1;            
             I(j) += 1;
-            b(i) =  dlandscape(p, I);
+            A(i,j) =  dlandscape(p, I);
         }
     }
 }

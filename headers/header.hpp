@@ -11,8 +11,9 @@ using namespace std;
                                 /*Variables*/
 /*============================================================================*/
 
-ifstream init;	/*Fichier d'initialisation*/
-int N, D;		/*N le nombre de minima, D le nombre de dimensions*/
+extern ifstream init;	/*Fichier d'initialisation*/
+extern int N;		/*N le nombre de minima*/ 
+extern int D;		/*D le nombre de dimensions*/
 
 /*============================================================================*/
                                 /*Utilitaires*/
@@ -41,7 +42,7 @@ double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorX
                                 /*Méthodes*/
 /*============================================================================*/ 
 
-void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon);
+void Descent(VectorXd& p, int i_max, double epsilon);
 /*Descent: applique une méthode classique pour trouver le minima (équilibre en quasi statique sum(F)=0)*/
 
 
