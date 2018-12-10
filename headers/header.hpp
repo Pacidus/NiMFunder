@@ -7,13 +7,6 @@
 
 using namespace Eigen;
 using namespace std;
-/*============================================================================*/
-                                /*Variables*/
-/*============================================================================*/
-
-extern ifstream init;	/*Fichier d'initialisation*/
-extern int N;		/*N le nombre de minima*/ 
-extern int D;		/*D le nombre de dimensions*/
 
 /*============================================================================*/
                                 /*Utilitaires*/
