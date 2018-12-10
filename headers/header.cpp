@@ -23,16 +23,16 @@ double alea()
                                 /*Fonctions*/
 /*============================================================================*/
 
-double DGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A)
+double DGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double a)
 {
 	/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
-    dont le l'extremum se situe à là position P et à la hauteur A*/
+    dont le l'extremum se situe à là position P et à la hauteur a*/
 
     VectorXd r = (p-P).array()/sigma.array();
 
     double arg = r.norm();
 
-    return A*exp(-arg*arg/2);
+    return a*exp(-arg*arg/2);
 
 }//DGauss
 
@@ -42,8 +42,6 @@ double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
 {
 	/*dDGauss: retourne la valeur de la dérivée d'une gaussienne à la position p
     a D dimensions dont le l'extremum se situe à là position P et à la hauteur A*/
-    int n = I.size();
-
     double Prod = 1;
 
     VectorXd dr = (p-P);
@@ -54,7 +52,7 @@ double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
 
     dr = -2*dr;
 
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < N; i++)
     {
         Prod *= dr(I(i));
     }
@@ -65,18 +63,17 @@ double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
 
 /*============================================================================*/
 
-double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorXi& I)
+double dlandscape(VectorXd& p, VectorXi& I)
 {
     /*dlandscape: retourne la valeur de la dérivée du paysage de gaussiennes en la position p*/
 
-    int n = A.size();
     double Sol = 0;
-    VectorXd Pi(n), sigmai(n);
-    for(int i = 0; i < n; i++)
+    VectorXd Pi(N), sigmai(N);
+    for(int i = 0; i < N; i++)
     {
-        Pi = P.col(i);
-        sigmai = sigma.col(i);
-        Sol += dDGauss(p, Pi, sigmai, A(i), I);
+        Pi = Pm.col(i);
+        sigmai = Sigma.col(i);
+        Sol += dDGauss(p, Pi, sigmai, H[i], I);
     }
     return Sol;
 }//dlandscape
@@ -89,7 +86,6 @@ void Descent(VectorXd& p, int i_max, double epsilon)
 {
     /*Descent: aplique une méthode classique pour trouver le minima 
     (équlibre en quasi statique sum(F)=0)*/
-    int D = p.size();
     VectorXd b(D);
     MatrixXd A(D,D);
     double df2,Sddfa,Sddf;
