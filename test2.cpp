@@ -1,5 +1,5 @@
 /* on importe nos Lib*/
-#include "header.hpp"
+#include "headers/header.hpp"
 
 
 
@@ -44,8 +44,12 @@ int main()
 
     A << -2, -4, -4;
 
-    p << 0,2;
-    Descent(ddf, df, p, 10000, 1e-10);
-    cout << p << endl ;
+    ofstream fichier("find.res");
+    for(int i = 0; i < 200 ; i++)
+    {
+        p << 2*alea(),2*alea();
+        Descent(ddf, df, p, 10000, 1e-3);
+        fichier << p.transpose() << endl ;
+    }
     return 0;
 }

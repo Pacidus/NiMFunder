@@ -7,7 +7,6 @@
 
 using namespace Eigen;
 using namespace std;
-
 /*============================================================================*/
                                 /*Utilitaires*/
 /*============================================================================*/
@@ -28,6 +27,10 @@ double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
 /*dDGauss: retourne la valeur de la dérivée d'une gaussienne à la position p
 a D dimensions dont le l'extremum se situe à là position P et à la hauteur A*/
 
+double landscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A);
+/*landscape: retourne la valeur du paysage de gaussiennes en la position p*/
+
+
 double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorXi& I);
 /*dlandscape: retourne la valeur de la dérivée du paysage de gaussiennes en la position p*/
 
@@ -35,7 +38,7 @@ double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorX
                                 /*Méthodes*/
 /*============================================================================*/ 
 
-void Descent(VectorXd& p, int i_max, double epsilon);
+void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon);
 /*Descent: applique une méthode classique pour trouver le minima (équilibre en quasi statique sum(F)=0)*/
 
 
