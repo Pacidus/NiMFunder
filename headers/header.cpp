@@ -94,24 +94,59 @@ double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorX
                                 /*Méthodes*/
 /*============================================================================*/
 
-void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon)
+int Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon)
 {
     /*Descent: aplique une méthode classique pour trouver le minima
     (équlibre en quasi statique sum(F)=0)*/
     int D = p.size();
     VectorXd b(D);
-    MatrixXd A(D,D);
-    double df2,Sddfa,Sddf;
+    double df2;
     int i = 0;
     do
     {
 	i++; 				//On implémente de 1
 	df(b,p);			//On génère le vécteur de la dérivée première
 	df2 = b.norm();			//On génère la norme de la dérivée première
-	ddf(A,p);			//On génère la matrice des dérivées secondes
-	Sddf = A.sum();		//On génère la somme des derivées secondes
-	Sddfa = -A.cwiseAbs().sum();	//On génère la somme de la valeur absolue des dérivées secondes
-	p -= b.normalized()*0.01;
+	p -= b.normalized()/pow(i,1.5);
     }
     while(i < i_max and not(df2 < epsilon));
+	return i;
 }
+
+void SteepDescent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon)
+{
+    /*SteepDescent: applique une méthode classique pour trouver le minima (en approximent la fonction à l'ordre 2)*/
+    int D = p.size();
+    VectorXd b(D);
+    VectorXd r(D);
+    MatrixXd A(D,D);
+
+    df(b,p);
+	ddf(A,p);
+
+    double alpha;
+    VectorXd q(D);
+
+    int i = 0;
+    r = b - A*p;
+
+    double delta = r.transpose()*r;
+    double delta0 = delta*epsilon*epsilon;
+
+    while(i < i_max and  delta > delta0)
+    {
+    q = A*r;
+    alpha = delta/(r.transpose()*q);
+    p = p + alpha*r;
+    if(i%1 == 0)
+    {
+		df(b,p);
+    	ddf(A,p);
+        r = b - A*p;
+    }
+	else r -= alpha*q;
+	delta = r.transpose()*r;
+	i++; 				//On implémente de 1
+    }
+}
+

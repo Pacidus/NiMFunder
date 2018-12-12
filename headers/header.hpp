@@ -36,9 +36,10 @@ double dlandscape(VectorXd& p, MatrixXd& P, MatrixXd& sigma, VectorXd& A,VectorX
 
 /*============================================================================*/
                                 /*Méthodes*/
-/*============================================================================*/ 
+/*============================================================================*/
 
-void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon);
+int Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon);
 /*Descent: applique une méthode classique pour trouver le minima (équilibre en quasi statique sum(F)=0)*/
 
-
+void SteepDescent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), VectorXd& p, int i_max, double epsilon);
+/*SteepDescent: applique une méthode classique pour trouver le minima (en approximent la fonction à l'ordre 2)*/

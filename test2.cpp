@@ -43,14 +43,16 @@ int main()
 
     A << -3, -4, -4;
 
-
+    double j;
     ofstream fichier("find.res");
-    for(int i = 0; i < 10000 ; i++)
+    for(double i = 1; i > 1e-124 ; i = i/2)
     {
-        p << 2*alea(),2*alea();
-        Descent(ddf, df, p, 200, 1e-5);
-        fichier << p.transpose() << endl ;
-
+        for(int k = 0; k < 100; k++)
+        {
+            p << 2*alea(),2*alea();
+            j += Descent(ddf, df, p, 200000000, i);
+        }
+        fichier << (j/1000) << " " << i << endl;
     }
     fichier.close();
     return 0;
