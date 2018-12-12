@@ -1,12 +1,9 @@
 /* on importe nos Lib*/
 #include "headers/header.hpp"
 
-
-
-VectorXd p(2), A(3);
+VectorXd A(3);
+VectorXd p(2);
 MatrixXd P(2,3), sigma(2,3);
-
-
 
 void df(VectorXd& b, VectorXd& p)
 {
@@ -36,20 +33,25 @@ void ddf(MatrixXd& Ai, VectorXd& p)
 
 int main()
 {
+
+
     P << 1, .5, 1.5,
          1, .5,   1;
 
     sigma << .1, .3, .2,
              .1, .3, .5;
 
-    A << -2, -4, -4;
+    A << -3, -4, -4;
+
 
     ofstream fichier("find.res");
-    for(int i = 0; i < 200 ; i++)
+    for(int i = 0; i < 10000 ; i++)
     {
         p << 2*alea(),2*alea();
-        Descent(ddf, df, p, 10000, 1e-3);
+        Descent(ddf, df, p, 200, 1e-5);
         fichier << p.transpose() << endl ;
+
     }
+    fichier.close();
     return 0;
 }

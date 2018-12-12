@@ -19,10 +19,10 @@ double DGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A)
     dont le l'extremum se situe à là position P et à la hauteur A*/
 
     VectorXd r = (p-P).array()/sigma.array();
+    r = r.array()*r.array();
+    double arg = r.sum();
 
-    double arg = r.norm();
-
-    return A*exp(-arg*arg/2);
+    return A*exp(-arg/2);
 
 }//DGauss
 
@@ -39,17 +39,17 @@ double dDGauss(VectorXd& p, VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
     VectorXd dr = (p-P);
 
     VectorXd r = dr.array()/sigma.array();
+    r = r.array()*r.array();
+    double arg = r.sum();
 
-    double arg = r.norm();
-
-    dr = -2*dr;
+    dr = -dr.array()/(sigma.array()*sigma.array());
 
     for(int i = 0; i < n; i++)
     {
         Prod *= dr(I(i));
     }
 
-    return Prod*A*exp(-arg*arg/2);
+    return Prod*A*exp(-arg/2);
 
 }//DGauss
 
@@ -111,7 +111,7 @@ void Descent(void ddf(MatrixXd&, VectorXd&),void df(VectorXd&, VectorXd&), Vecto
 	ddf(A,p);			//On génère la matrice des dérivées secondes
 	Sddf = A.sum();		//On génère la somme des derivées secondes
 	Sddfa = -A.cwiseAbs().sum();	//On génère la somme de la valeur absolue des dérivées secondes
-	p -= b.normalized()/(i*.5);
+	p -= b.normalized()*0.01;
     }
-    while(i < i_max and not(df2 < epsilon and Sddfa == Sddf));
+    while(i < i_max and not(df2 < epsilon));
 }
