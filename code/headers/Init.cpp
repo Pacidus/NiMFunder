@@ -2,8 +2,12 @@
 
 void Init(int& N, int& D, MatrixXd& Ps, MatrixXd& Sigma, VectorXd& H)
 {
-	ifstream Initialiser(".../Paysage.init");
+	ifstream Initialiser("/home/yohan/Bureau/NiMFunder/Paysage.init");
+
+	if(Initialiser.fail()) cout << "fichier non trouvé" << endl;
+
 	char temp[100];
+
 
 	Initialiser >> temp;
 
@@ -16,7 +20,6 @@ void Init(int& N, int& D, MatrixXd& Ps, MatrixXd& Sigma, VectorXd& H)
 	Ps.resize(D,N);
 	Sigma.resize(D,N);
 	H.resize(N);
-
 
 
 	for(int i = 0; i < D; i++)
@@ -42,4 +45,6 @@ void Init(int& N, int& D, MatrixXd& Ps, MatrixXd& Sigma, VectorXd& H)
 	    Initialiser >> temp;
 	    H(i) = atof(temp);
 	}
+
+	return;
 }
