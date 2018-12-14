@@ -1,44 +1,28 @@
 /* on importe nos Lib*/
-#include "headers/Init.hpp"
-
-int N;
-int D;
-MatrixXd Ps(1,1);
-MatrixXd Sigma(1,1);
-VectorXd H(1);
-
-void df(VectorXd& b, VectorXd& p)
-{
-    VectorXi Ix(1);
-    Ix << 0;
-
-    VectorXi Iy(1);
-    Iy << 1;
-
-    b << dlandscape(p, Ps, Sigma, H, Ix), dlandscape(p, Ps, Sigma, H, Iy);
-}
-
-void ddf(MatrixXd& Ai, VectorXd& p)
-{
-    VectorXi Ixx(2);
-    Ixx << 0,0;
-
-    VectorXi Iyy(2);
-    Iyy << 1,1;
-
-    VectorXi Ixy(2);
-    Ixy << 0,1;
-
-    Ai << dlandscape(p, Ps, Sigma, H, Ixx), dlandscape(p, Ps, Sigma, H, Ixy),
-          dlandscape(p, Ps, Sigma, H, Ixy), dlandscape(p, Ps, Sigma, H, Iyy);
-}
+#include "headers/Class.hpp"
 
 int main()
 {
-	Init(N, D, Ps, Sigma, H);
+	SolNim PayF;
+	PayF.Init();
 
+	int N;
+	PayF.get_Num(N);
+	int D;
+	PayF.get_Dim(D);
+	MatrixXd Ps(N,D);
+	PayF.get_Pos(Ps);
+	MatrixXd Sigma(N,D);
+	PayF.get_Sig(Ps);
+	VectorXd H(N);
+	PayF.get_Hau(H);
 	VectorXd p(D);
-
+	VectorXi I1(D);
+	VectorXi I2(D);
+	VectorXi I3(D);
+	I1 << 1,0;
+	I2 << 0,1;
+	I3 << 1,1;
 	ostringstream filename;
 
 	filename << "/home/yohan/Bureau/NiMFunder/Results/Min" << N << "Dim" << D << ".res";
@@ -46,16 +30,15 @@ int main()
 	ofstream file(filename.str().c_str());
 
 	int n;
-	for(int j = 0; j < 10000000; j++)
+	cin >> n;
+
+	for(int j = 0; j < n; j++)
 	{
-		for(int i = 0; i < D; i++)
-		{
-			p(i) = alea()*2;
-		}
-		n = Descent(ddf,df,p, j, .1/j);
-		file << j << " " << n << " " <<  p.transpose() << endl;
+		PayF.Rpos(2,0);
+		PayF.get_pos(p);
+		file << p.transpose() << " " << PayF.landscape() << " ";
+		file << PayF.dlandscape(I1) << " " << PayF.dlandscape(I2) << " ";
+		file << PayF.dlandscape(I3) << endl;
 	}
-
-
     return 0;
 }
