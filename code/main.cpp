@@ -26,7 +26,7 @@ int main()
 
 	int n;
 	cin >> n;
-	double epsilon = 1e-6;
+	double epsilon = 1e-5;
 	int i = 0;
 	double dt = 1;
 	for(int j = 0; j < n; j++)
@@ -36,16 +36,15 @@ int main()
 
    		do
     	{
-    	dt = 0.0001;
+    	dt = 0.1/i;
 		i++; 				//On implémente de 1
-
 		PayF.SteepDescent(dt);
 		PayF.get_b(b);
 		PayF.get_pos(p);
-		i++;
-		}
-	    while(b.norm() > epsilon and i < 1000000);
 		file << p.transpose() << " " << PayF.landscape() << endl;
+		}
+	    while(b.norm()*b.norm() > epsilon*epsilon and i < 1000);
+
 	}
     return 0;
 }

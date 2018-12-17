@@ -31,9 +31,8 @@ class SolNim
 		/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
     	dont le l'extremum se situe à là position P et à la hauteur A*/
 
-		double dDGauss(VectorXd& P, VectorXd& sigma, double A, VectorXi& I);
-		/*dDGauss: retourne la valeur de la dérivée d'une gaussienne à la position p
-	    a D dimensions dont le l'extremum se situe à là position P et à la hauteur A*/
+		double xDGauss(VectorXd& P, VectorXd& sigma, double A);
+		double yDGauss(VectorXd& P, VectorXd& sigma, double A);
 
 	public:
 		/*Init*/
@@ -62,12 +61,10 @@ class SolNim
 		/*Functions*/
 		double landscape();
 		/*landscape: retourne la valeur du paysage de gaussiennes en la position p*/
-		double dlandscape(VectorXi I);
-    	/*dlandscape: retourne la valeur de la dérivée du paysage de gaussiennes en la position p*/
+		double dlandscape(int d);
+
 		void df();
 		/*df: Génère le vecteur des dérivée premières*/
-		void ddf();
-		/*ddf: Génère la matrice des dérivée secondes*/
 
 		/*Methodes*/
 		void SteepDescent(double dt);

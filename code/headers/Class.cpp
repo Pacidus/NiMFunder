@@ -25,33 +25,31 @@ double SolNim::DGauss(VectorXd& P, VectorXd& sigma, double A)
     double arg = r.sum();
 
     return A*exp(-arg/2);
-
 }//DGauss
 
-/*============================================================================*/
-
-double SolNim::dDGauss(VectorXd& P, VectorXd& sigma, double A, VectorXi& I)
+double SolNim::xDGauss(VectorXd& P, VectorXd& sigma, double A)
 {
-	/*dDGauss: retourne la valeur de la dérivée d'une gaussienne à la position p
-    a D dimensions dont l'extremum se situe à là position P et à la hauteur A*/
-    double Prod = 1;
+	/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
+    dont le l'extremum se situe à là position P et à la hauteur A*/
 
-    VectorXd dr = (p-P);
-
-    VectorXd r = dr.array()/sigma.array();
+    VectorXd r = (p-P).array()/sigma.array();
     r = r.array()*r.array();
     double arg = r.sum();
 
-    dr = -dr.array()/(sigma.array()*sigma.array());
+    return -A*((p-P)(0)/(sigma(0)*sigma(0)))*exp(-arg/2);
+}//xDGauss
 
-    for(int i = 0; i < D; i++)
-    {
-        Prod *= dr(I(i));
-    }
+double SolNim::yDGauss(VectorXd& P, VectorXd& sigma, double A)
+{
+	/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
+    dont le l'extremum se situe à là position P et à la hauteur A*/
 
-    return Prod*A*exp(-arg/2);
+    VectorXd r = (p-P).array()/sigma.array();
+    r = r.array()*r.array();
+    double arg = r.sum();
 
-}//DGauss
+    return -A*((p-P)(1)/(sigma(1)*sigma(1)))*exp(-arg/2);
+}//yDGauss
 
 /*============================================================================*/
 								/*Public func*/
@@ -211,9 +209,9 @@ double SolNim::landscape()
     return Sol;
 }//landscape
 
-double SolNim::dlandscape(VectorXi I)
+double SolNim::dlandscape(int d)
 {
-    /*dlandscape: retourne la valeur de la dérivée du paysage de gaussiennes en la position p*/
+    /*landscape: retourne la valeur du paysage de derivée de gaussiennes en la position p*/
 
     double Sol = 0;
     VectorXd P(D), sigma(D);
@@ -221,39 +219,17 @@ double SolNim::dlandscape(VectorXi I)
     {
         P = Ps.col(i);
         sigma = Sigma.col(i);
-        Sol += dDGauss(P, sigma, H(i), I);
+        if(d == 0) Sol += xDGauss(P, sigma, H(i));
+        if(d == 1) Sol += yDGauss(P, sigma, H(i));
     }
     return Sol;
 }//dlandscape
 
 void SolNim::df()
 {
-/*df: Génère le vecteur des dérivée premières*/
-    MatrixXi I(D,D);
-    I = MatrixXi::Identity(D,D);
-
-	for(int i = 0; i < D; i++)
-	{
-    	b(i) = dlandscape(I.col(i));
-	}
-}
-
-void SolNim::ddf()
-{
-/*ddf: Génère la matrice des dérivée secondes*/
-	VectorXi I(D);
-	I.fill(0);
-	for(int i = 0; i < D ; i++)
-	{
-		for(int j = 0; j < D ; j++)
-		{
-			I(i) += 1;
-			I(j) += 1;
-
-			A(i,j) = dlandscape(I);
-			I.fill(0);
-		}
-	}
+	/*df: Génère le vecteur des dérivée premières*/
+    b(0) = dlandscape(0);
+    b(1) = dlandscape(1);
 }
 
  /*==================================Méthodes=================================*/
