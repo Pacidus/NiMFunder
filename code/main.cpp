@@ -20,25 +20,41 @@ int main()
 	VectorXi I1(D);
 	VectorXi I2(D);
 	VectorXi I3(D);
+	VectorXd b(D);
 	I1 << 1,0;
 	I2 << 0,1;
 	I3 << 1,1;
 	ostringstream filename;
 
-	filename << "/home/yohan/Bureau/NiMFunder/Results/Min" << N << "Dim" << D << ".res";
+	filename << "/home/yohan/Bureau/NiMFunder/Results/Min" << N << "Dim" << D << "Solve.res";
 
 	ofstream file(filename.str().c_str());
 
 	int n;
 	cin >> n;
+	double epsilon = 1e-6;
+	int i = 0;
 
 	for(int j = 0; j < n; j++)
 	{
-		PayF.Rpos(2,0);
+		PayF.Rpos(1.5,.25);
+		int i = 0;
+
+   		do
+    	{
+		i++; 				//On implémente de 1
+		PayF.SteepDescent();
+		PayF.get_b(b);
 		PayF.get_pos(p);
-		file << p.transpose() << " " << PayF.landscape() << " ";
-		file << PayF.dlandscape(I1) << " " << PayF.dlandscape(I2) << " ";
-		file << PayF.dlandscape(I3) << endl;
+		i++;
+		}
+	    while(b.norm() > epsilon and i < 1000000);
+
+		file << p.transpose() << " " << PayF.landscape() << endl;
 	}
     return 0;
 }
+/*int D = p.size();
+    VectorXd b(D);
+    double df2;*/
+

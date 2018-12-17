@@ -68,4 +68,7 @@ class SolNim
 		/*df: Génère le vecteur des dérivée premières*/
 		void ddf();
 		/*ddf: Génère la matrice des dérivée secondes*/
+
+		/*Methodes*/
+		void SteepDescent();
 };

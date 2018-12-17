@@ -1,22 +1,33 @@
 CC      = g++
-CFLAGS  = -Ofast -W -Wall -Wextra
+CFLAGS  = -Ofast -W -Wall -Wextra -DNDEBUG
+
 DEPS    = headers/Class.hpp
-SOURCES = main.cpp $(DEPS:.hpp=.cpp)
-OBJ = $(SOURCES:.cpp=.o)
+SSOURCES = main.cpp $(DEPS:.hpp=.cpp)
+SOBJ = $(SSOURCES:.cpp=.o)
+
+MSOURCES = Map.cpp $(DEPS:.hpp=.cpp)
+MOBJ = $(MSOURCES:.cpp=.o)
 
 
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-Sim: $(OBJ)
-	$(CC) -o ../$@ $(OBJ) $(CFLAGS)
+Sim: $(SOBJ)
+	$(CC) -o ../$@ $(SOBJ) $(CFLAGS)
+
+Map: $(MOBJ)
+	$(CC) -o ../$@ $(MOBJ) $(CFLAGS)
 
 clean:
-	rm -f ∗~ $(OBJ) ∗.bak
+	rm -f ∗~ $(MOBJ) $(SOBJ) ∗.bak
 
-depend:
-	makedepend $(SOURCES)
+Sdepend:
+	makedepend $(SSOURCES)
+
+Mdepend:
+	makedepend $(MSOURCES)
+
 # DO NOT DELETE
 
 main.o: headers/Class.hpp headers/Eigen/Dense headers/Eigen/Core

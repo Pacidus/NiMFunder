@@ -256,3 +256,13 @@ void SolNim::ddf()
 	}
 }
 
+ /*==================================Méthodes=================================*/
+
+void SolNim::SteepDescent()
+{
+    /*Descent: aplique une méthode classique pour trouver le minima
+    (équlibre en quasi statique sum(F)=0)*/
+
+	df();			//On génère le vécteur de la dérivée première
+	p -= b.normalized()*1e-2;
+}
