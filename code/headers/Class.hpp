@@ -70,5 +70,5 @@ class SolNim
 		/*ddf: Génère la matrice des dérivée secondes*/
 
 		/*Methodes*/
-		void SteepDescent();
+		void SteepDescent(double dt);
 };
