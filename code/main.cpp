@@ -8,21 +8,9 @@ void FindStep(int& NRe, int& NRa, int N_max)
 	Randomap.Init();
 
 	int D;
-<<<<<<< HEAD
 	Release.get_Dim(D);
 	VectorXd b(D);
 
-=======
-	PayF.get_Dim(D);
-	MatrixXd Ps(N,D);
-	PayF.get_Pos(Ps);
-	MatrixXd Sigma(N,D);
-	PayF.get_Sig(Ps);
-	VectorXd H(N);
-	PayF.get_Hau(H);
-	VectorXd p(D);
-	VectorXd b(D);
->>>>>>> db2fd827ec57b64c87ee009ed955c86dcfd696cb
 	ostringstream filename;
 	filename << "/home/yohan/Bureau/NiMFunder/Results/FindStep.res";
 	ofstream file(filename.str().c_str());
@@ -46,7 +34,6 @@ void FindStep(int& NRe, int& NRa, int N_max)
 	double dt = 1;
 	double epsilon = 1e-15;
 
-<<<<<<< HEAD
 	Release.Rpos(2,0);
 
 	while(NRa*NRe < N_max*N_max)
@@ -73,29 +60,6 @@ void FindStep(int& NRe, int& NRa, int N_max)
 		file << step << " " << NRe << " " << NRa << endl;
 		Re = 0;
 		Ra = 0;
-=======
-	int n;
-	cin >> n;
-	double epsilon = 1e-5;
-	int i = 0;
-	double dt = 1;
-	for(int j = 0; j < n; j++)
-	{
-		PayF.Rpos(1.5,.25);
-		i = 1;
-
-   		do
-    	{
-    	dt = 0.1/i;
-		i++; 				//On implémente de 1
-		PayF.SteepDescent(dt);
-		PayF.get_b(b);
-		PayF.get_pos(p);
-		file << p.transpose() << " " << PayF.landscape() << endl;
-		}
-	    while(b.norm()*b.norm() > epsilon*epsilon and i < 1000);
-
->>>>>>> db2fd827ec57b64c87ee009ed955c86dcfd696cb
 	}
 }
 
