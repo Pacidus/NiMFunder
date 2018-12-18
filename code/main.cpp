@@ -1,44 +1,74 @@
 /* on importe nos Lib*/
 #include "headers/Class.hpp"
 
-int main()
+void FindStep(int& NRe, int& NRa, int N_max)
 {
-	SolNim PayF;
-	PayF.Init();
+	SolNim Release, Randomap;
+	Release.Init();
+	Randomap.Init();
 
-	int N;
-	PayF.get_Num(N);
 	int D;
-	PayF.get_Dim(D);
-	MatrixXd Ps(N,D);
-	PayF.get_Pos(Ps);
-	MatrixXd Sigma(N,D);
-	PayF.get_Sig(Ps);
-	VectorXd H(N);
-	PayF.get_Hau(H);
-	VectorXd p(D);
-	VectorXi I1(D);
-	VectorXi I2(D);
-	VectorXi I3(D);
-	I1 << 1,0;
-	I2 << 0,1;
-	I3 << 1,1;
+	Release.get_Dim(D);
+	VectorXd b(D);
+
 	ostringstream filename;
-
-	filename << "/home/yohan/Bureau/NiMFunder/Results/Min" << N << "Dim" << D << ".res";
-
+	filename << "/home/yohan/Bureau/NiMFunder/Results/FindStep.res";
 	ofstream file(filename.str().c_str());
 
-	int n;
-	cin >> n;
-
-	for(int j = 0; j < n; j++)
+	if(NRe+NRa == 0)
 	{
-		PayF.Rpos(2,0);
-		PayF.get_pos(p);
-		file << p.transpose() << " " << PayF.landscape() << " ";
-		file << PayF.dlandscape(I1) << " " << PayF.dlandscape(I2) << " ";
-		file << PayF.dlandscape(I3) << endl;
+		ofstream file(filename.str().c_str());
 	}
+	else
+	{
+		fstream file;
+		file.open(filename.str().c_str(), fstream::out | fstream::app);
+	}
+
+	bool Re, Ra;
+	Re = 0;
+	Ra = 0;
+
+	int j = 0;
+	int step = 0;
+	double dt = 1;
+	double epsilon = 1e-15;
+
+	Release.Rpos(2,0);
+
+	while(NRa*NRe < N_max*N_max)
+	{
+		step++;
+
+		j++;
+		dt = 0.2/j;
+		Release.SteepDescent(dt);
+		Release.get_b(b);
+		Re = (b.norm() < epsilon);
+		if(Re)
+		{
+		NRe++;
+		j = 0;
+		Release.Rpos(2,0);
+		}
+
+		Randomap.Rpos(2,0);
+		Randomap.get_b(b);
+		Ra = (b.norm() < epsilon);
+		if(Ra) NRa++;
+
+		file << step << " " << NRe << " " << NRa << endl;
+		Re = 0;
+		Ra = 0;
+	}
+}
+
+
+
+int main()
+{
+	int NRe = 0;
+	int NRa = 0;
+	FindStep(NRe, NRa, 10);
     return 0;
 }
