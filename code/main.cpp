@@ -1,16 +1,8 @@
 /* on importe nos Lib*/
-#include "headers/Class.hpp"
+#include "headers/Methods.hpp"
 
 void FindStep(int& NRe, int& NRa, int N_max)
 {
-	SolNim Release, Randomap;
-	Release.Init();
-	Randomap.Init();
-
-	int D;
-	Release.get_Dim(D);
-	VectorXd b(D);
-
 	ostringstream filename;
 	filename << "/home/yohan/Bureau/NiMFunder/Results/FindStep.res";
 	ofstream file(filename.str().c_str());
@@ -25,42 +17,45 @@ void FindStep(int& NRe, int& NRa, int N_max)
 		file.open(filename.str().c_str(), fstream::out | fstream::app);
 	}
 
-	bool Re, Ra;
-	Re = 0;
-	Ra = 0;
-
-	int j = 0;
-	int step = 0;
-	double dt = 1;
+	int Ntot = 0;
 	double epsilon = 1e-15;
+	double l = 0.3;
+	double e = 3;
+	double L0 = 0;
+	double L = 2;
+	int Nbr = 100;
+	double val[Nbr];
+	VectorXd p[Nbr];
+	double couts = Nbr;
+	couts +=	Gabriele(p, val, Nbr, L, L0, e, l, epsilon);
 
-	Release.Rpos(2,0);
+	SolNim Release;
+	Release.Init();
 
-	while(NRa*NRe < N_max*N_max)
+	int j;
+
+	int D;
+	Release.get_Dim(D);
+	VectorXd b(D);
+
+	double dt = 1;
+
+	for(int i = 1; i < Nbr; i++)
 	{
-		step++;
+		j = 1;
+		Release.Rpos(L,L0);
 
-		j++;
-		dt = 0.2/j;
-		Release.SteepDescent(dt);
-		Release.get_b(b);
-		Re = (b.norm() < epsilon);
-		if(Re)
+		do
 		{
-		NRe++;
-		j = 0;
-		Release.Rpos(2,0);
+			dt = 0.2/j;
+			Release.SteepDescent(dt);
+			Release.get_b(b);
+			j++;
 		}
-
-		Randomap.Rpos(2,0);
-		Randomap.get_b(b);
-		Ra = (b.norm() < epsilon);
-		if(Ra) NRa++;
-
-		file << step << " " << NRe << " " << NRa << endl;
-		Re = 0;
-		Ra = 0;
+		while(b.norm() < epsilon);
+		Ntot += j;
 	}
+	cout << Ntot <<" "<< couts << endl;
 }
 
 

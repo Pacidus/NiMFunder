@@ -1,7 +1,7 @@
 CC      = g++
 CFLAGS  = -Ofast -W -Wall -Wextra -DNDEBUG
 
-DEPS    = headers/Class.hpp
+DEPS    = headers/Class.hpp headers/Methods.hpp
 SSOURCES = main.cpp $(DEPS:.hpp=.cpp)
 SOBJ = $(SSOURCES:.cpp=.o)
 
@@ -332,3 +332,165 @@ headers/Class.o: headers/Eigen/src/Eigenvalues/RealQZ.h
 headers/Class.o: headers/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
 headers/Class.o: headers/Eigen/src/Eigenvalues/./RealQZ.h
 headers/Class.o: headers/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+headers/Methods.o: headers/Methods.hpp headers/Class.hpp headers/Eigen/Dense
+headers/Methods.o: headers/Eigen/Core
+headers/Methods.o: headers/Eigen/src/Core/util/DisableStupidWarnings.h
+headers/Methods.o: headers/Eigen/src/Core/util/Macros.h
+headers/Methods.o: headers/Eigen/src/Core/util/MKL_support.h
+headers/Methods.o: headers/Eigen/src/Core/util/Constants.h
+headers/Methods.o: headers/Eigen/src/Core/util/Meta.h
+headers/Methods.o: headers/Eigen/src/Core/util/ForwardDeclarations.h
+headers/Methods.o: headers/Eigen/src/Core/util/StaticAssert.h
+headers/Methods.o: headers/Eigen/src/Core/util/XprHelper.h
+headers/Methods.o: headers/Eigen/src/Core/util/Memory.h
+headers/Methods.o: headers/Eigen/src/Core/NumTraits.h
+headers/Methods.o: headers/Eigen/src/Core/MathFunctions.h
+headers/Methods.o: headers/Eigen/src/Core/GenericPacketMath.h
+headers/Methods.o: headers/Eigen/src/Core/MathFunctionsImpl.h
+headers/Methods.o: headers/Eigen/src/Core/arch/Default/ConjHelper.h
+headers/Methods.o: headers/Eigen/src/Core/arch/CUDA/Half.h
+headers/Methods.o: headers/Eigen/src/Core/arch/CUDA/PacketMathHalf.h
+headers/Methods.o: headers/Eigen/src/Core/arch/CUDA/TypeCasting.h
+headers/Methods.o: headers/Eigen/src/Core/arch/Default/Settings.h
+headers/Methods.o: headers/Eigen/src/Core/functors/TernaryFunctors.h
+headers/Methods.o: headers/Eigen/src/Core/functors/BinaryFunctors.h
+headers/Methods.o: headers/Eigen/src/Core/functors/UnaryFunctors.h
+headers/Methods.o: headers/Eigen/src/Core/functors/NullaryFunctors.h
+headers/Methods.o: headers/Eigen/src/Core/functors/StlFunctors.h
+headers/Methods.o: headers/Eigen/src/Core/functors/AssignmentFunctors.h
+headers/Methods.o: headers/Eigen/src/Core/arch/CUDA/Complex.h
+headers/Methods.o: headers/Eigen/src/Core/IO.h
+headers/Methods.o: headers/Eigen/src/Core/DenseCoeffsBase.h
+headers/Methods.o: headers/Eigen/src/Core/DenseBase.h
+headers/Methods.o: headers/Eigen/src/plugins/BlockMethods.h
+headers/Methods.o: headers/Eigen/src/Core/MatrixBase.h
+headers/Methods.o: headers/Eigen/src/plugins/CommonCwiseUnaryOps.h
+headers/Methods.o: headers/Eigen/src/plugins/CommonCwiseBinaryOps.h
+headers/Methods.o: headers/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+headers/Methods.o: headers/Eigen/src/plugins/MatrixCwiseBinaryOps.h
+headers/Methods.o: headers/Eigen/src/Core/EigenBase.h
+headers/Methods.o: headers/Eigen/src/Core/Product.h
+headers/Methods.o: headers/Eigen/src/Core/CoreEvaluators.h
+headers/Methods.o: headers/Eigen/src/Core/AssignEvaluator.h
+headers/Methods.o: headers/Eigen/src/Core/Assign.h
+headers/Methods.o: headers/Eigen/src/Core/ArrayBase.h
+headers/Methods.o: headers/Eigen/src/plugins/ArrayCwiseUnaryOps.h
+headers/Methods.o: headers/Eigen/src/plugins/ArrayCwiseBinaryOps.h
+headers/Methods.o: headers/Eigen/src/Core/util/BlasUtil.h
+headers/Methods.o: headers/Eigen/src/Core/DenseStorage.h
+headers/Methods.o: headers/Eigen/src/Core/NestByValue.h
+headers/Methods.o: headers/Eigen/src/Core/ReturnByValue.h
+headers/Methods.o: headers/Eigen/src/Core/NoAlias.h
+headers/Methods.o: headers/Eigen/src/Core/PlainObjectBase.h
+headers/Methods.o: headers/Eigen/src/Core/Matrix.h
+headers/Methods.o: headers/Eigen/src/Core/Array.h
+headers/Methods.o: headers/Eigen/src/Core/CwiseTernaryOp.h
+headers/Methods.o: headers/Eigen/src/Core/CwiseBinaryOp.h
+headers/Methods.o: headers/Eigen/src/Core/CwiseUnaryOp.h
+headers/Methods.o: headers/Eigen/src/Core/CwiseNullaryOp.h
+headers/Methods.o: headers/Eigen/src/Core/CwiseUnaryView.h
+headers/Methods.o: headers/Eigen/src/Core/SelfCwiseBinaryOp.h
+headers/Methods.o: headers/Eigen/src/Core/Dot.h
+headers/Methods.o: headers/Eigen/src/Core/StableNorm.h
+headers/Methods.o: headers/Eigen/src/Core/Stride.h
+headers/Methods.o: headers/Eigen/src/Core/MapBase.h
+headers/Methods.o: headers/Eigen/src/Core/Map.h headers/Eigen/src/Core/Ref.h
+headers/Methods.o: headers/Eigen/src/Core/Block.h
+headers/Methods.o: headers/Eigen/src/Core/VectorBlock.h
+headers/Methods.o: headers/Eigen/src/Core/Transpose.h
+headers/Methods.o: headers/Eigen/src/Core/DiagonalMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/Diagonal.h
+headers/Methods.o: headers/Eigen/src/Core/DiagonalProduct.h
+headers/Methods.o: headers/Eigen/src/Core/Redux.h
+headers/Methods.o: headers/Eigen/src/Core/Visitor.h
+headers/Methods.o: headers/Eigen/src/Core/Fuzzy.h
+headers/Methods.o: headers/Eigen/src/Core/Swap.h
+headers/Methods.o: headers/Eigen/src/Core/CommaInitializer.h
+headers/Methods.o: headers/Eigen/src/Core/GeneralProduct.h
+headers/Methods.o: headers/Eigen/src/Core/Solve.h
+headers/Methods.o: headers/Eigen/src/Core/Inverse.h
+headers/Methods.o: headers/Eigen/src/Core/SolverBase.h
+headers/Methods.o: headers/Eigen/src/Core/PermutationMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/Transpositions.h
+headers/Methods.o: headers/Eigen/src/Core/TriangularMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/SelfAdjointView.h
+headers/Methods.o: headers/Eigen/src/Core/products/GeneralBlockPanelKernel.h
+headers/Methods.o: headers/Eigen/src/Core/products/Parallelizer.h
+headers/Methods.o: headers/Eigen/src/Core/ProductEvaluators.h
+headers/Methods.o: headers/Eigen/src/Core/products/GeneralMatrixVector.h
+headers/Methods.o: headers/Eigen/src/Core/products/GeneralMatrixMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/SolveTriangular.h
+headers/Methods.o: headers/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h
+headers/Methods.o: headers/Eigen/src/Core/products/SelfadjointMatrixVector.h
+headers/Methods.o: headers/Eigen/src/Core/products/SelfadjointMatrixMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/products/SelfadjointProduct.h
+headers/Methods.o: headers/Eigen/src/Core/products/SelfadjointRank2Update.h
+headers/Methods.o: headers/Eigen/src/Core/products/TriangularMatrixVector.h
+headers/Methods.o: headers/Eigen/src/Core/products/TriangularMatrixMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/products/TriangularSolverMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/products/TriangularSolverVector.h
+headers/Methods.o: headers/Eigen/src/Core/BandMatrix.h
+headers/Methods.o: headers/Eigen/src/Core/CoreIterators.h
+headers/Methods.o: headers/Eigen/src/Core/ConditionEstimator.h
+headers/Methods.o: headers/Eigen/src/Core/BooleanRedux.h
+headers/Methods.o: headers/Eigen/src/Core/Select.h
+headers/Methods.o: headers/Eigen/src/Core/VectorwiseOp.h
+headers/Methods.o: headers/Eigen/src/Core/Random.h
+headers/Methods.o: headers/Eigen/src/Core/Replicate.h
+headers/Methods.o: headers/Eigen/src/Core/Reverse.h
+headers/Methods.o: headers/Eigen/src/Core/ArrayWrapper.h
+headers/Methods.o: headers/Eigen/src/Core/GlobalFunctions.h
+headers/Methods.o: headers/Eigen/src/Core/util/ReenableStupidWarnings.h
+headers/Methods.o: headers/Eigen/LU headers/Eigen/src/misc/Kernel.h
+headers/Methods.o: headers/Eigen/src/misc/Image.h
+headers/Methods.o: headers/Eigen/src/LU/FullPivLU.h
+headers/Methods.o: headers/Eigen/src/LU/PartialPivLU.h
+headers/Methods.o: headers/Eigen/src/LU/Determinant.h
+headers/Methods.o: headers/Eigen/src/LU/InverseImpl.h headers/Eigen/Cholesky
+headers/Methods.o: headers/Eigen/Jacobi headers/Eigen/src/Jacobi/Jacobi.h
+headers/Methods.o: headers/Eigen/src/Cholesky/LLT.h
+headers/Methods.o: headers/Eigen/src/Cholesky/LDLT.h headers/Eigen/QR
+headers/Methods.o: headers/Eigen/Householder
+headers/Methods.o: headers/Eigen/src/Householder/Householder.h
+headers/Methods.o: headers/Eigen/src/Householder/HouseholderSequence.h
+headers/Methods.o: headers/Eigen/src/Householder/BlockHouseholder.h
+headers/Methods.o: headers/Eigen/src/QR/HouseholderQR.h
+headers/Methods.o: headers/Eigen/src/QR/FullPivHouseholderQR.h
+headers/Methods.o: headers/Eigen/src/QR/ColPivHouseholderQR.h
+headers/Methods.o: headers/Eigen/src/QR/CompleteOrthogonalDecomposition.h
+headers/Methods.o: headers/Eigen/SVD headers/Eigen/src/misc/RealSvd2x2.h
+headers/Methods.o: headers/Eigen/src/SVD/UpperBidiagonalization.h
+headers/Methods.o: headers/Eigen/src/SVD/SVDBase.h
+headers/Methods.o: headers/Eigen/src/SVD/JacobiSVD.h
+headers/Methods.o: headers/Eigen/src/SVD/BDCSVD.h headers/Eigen/Geometry
+headers/Methods.o: headers/Eigen/src/Geometry/OrthoMethods.h
+headers/Methods.o: headers/Eigen/src/Geometry/EulerAngles.h
+headers/Methods.o: headers/Eigen/src/Geometry/Homogeneous.h
+headers/Methods.o: headers/Eigen/src/Geometry/RotationBase.h
+headers/Methods.o: headers/Eigen/src/Geometry/Rotation2D.h
+headers/Methods.o: headers/Eigen/src/Geometry/Quaternion.h
+headers/Methods.o: headers/Eigen/src/Geometry/AngleAxis.h
+headers/Methods.o: headers/Eigen/src/Geometry/Transform.h
+headers/Methods.o: headers/Eigen/src/Geometry/Translation.h
+headers/Methods.o: headers/Eigen/src/Geometry/Scaling.h
+headers/Methods.o: headers/Eigen/src/Geometry/Hyperplane.h
+headers/Methods.o: headers/Eigen/src/Geometry/ParametrizedLine.h
+headers/Methods.o: headers/Eigen/src/Geometry/AlignedBox.h
+headers/Methods.o: headers/Eigen/src/Geometry/Umeyama.h
+headers/Methods.o: headers/Eigen/Eigenvalues
+headers/Methods.o: headers/Eigen/src/Eigenvalues/Tridiagonalization.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/RealSchur.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/./HessenbergDecomposition.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/EigenSolver.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/./RealSchur.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/./Tridiagonalization.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/ComplexSchur.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/./ComplexSchur.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/RealQZ.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/./RealQZ.h
+headers/Methods.o: headers/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
