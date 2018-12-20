@@ -5,7 +5,12 @@ int main()
 {
 	SolNim PayF;
 	PayF.Init();
+	int D;
+	int N;
 
+	PayF.get_Dim(D);
+	PayF.get_Num(N);
+	VectorXd p(D);
 	ostringstream filename;
 
 	filename << "/home/yohan/Bureau/NiMFunder/Results/Min" << N << "Dim" << D << "Map.res";
@@ -14,7 +19,7 @@ int main()
 
 	int n = 1000;
 	double a, c;
-	a = 2./n;
+	a = 100./n;
 	c = 0;
 
 	for(int j = 0; j <= n; j++)

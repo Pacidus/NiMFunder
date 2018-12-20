@@ -30,7 +30,8 @@ Mdepend:
 
 # DO NOT DELETE
 
-main.o: headers/Class.hpp headers/Eigen/Dense headers/Eigen/Core
+main.o: headers/Methods.hpp headers/Class.hpp headers/Eigen/Dense
+main.o: headers/Eigen/Core
 main.o: headers/Eigen/src/Core/util/DisableStupidWarnings.h
 main.o: headers/Eigen/src/Core/util/Macros.h
 main.o: headers/Eigen/src/Core/util/MKL_support.h

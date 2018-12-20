@@ -10,3 +10,7 @@ void reject(VectorXd p[], double val[], int& Nbr, double e);
 void toclose(VectorXd p[], double val[], int& Nbr, double l);
 
 int release(VectorXd p[], double val[], int Nbr, double epsilon);
+
+void GenPays(int D, int N, double L, double L0, double sigma, double sigma0, double H, double H0);
+
+int Steepdes(SolNim Release, double L, double L0, double epsilon);

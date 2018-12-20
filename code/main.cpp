@@ -1,69 +1,61 @@
 /* on importe nos Lib*/
 #include "headers/Methods.hpp"
 
-void FindStep(int& NRe, int& NRa, int N_max)
+void FindStep(int& CoutR,int& CoutG, double L, double L0)
 {
-	ostringstream filename;
-	filename << "/home/yohan/Bureau/NiMFunder/Results/FindStep.res";
-	ofstream file(filename.str().c_str());
-
-	if(NRe+NRa == 0)
-	{
-		ofstream file(filename.str().c_str());
-	}
-	else
-	{
-		fstream file;
-		file.open(filename.str().c_str(), fstream::out | fstream::app);
-	}
-
-	int Ntot = 0;
-	double epsilon = 1e-15;
-	double l = 0.3;
-	double e = 3;
-	double L0 = 0;
-	double L = 2;
-	int Nbr = 100;
+	double epsilon = 1e-5;
+	double l = 4;
+	double e = 4;
+	int Nbr = 10000;
 	double val[Nbr];
 	VectorXd p[Nbr];
-	double couts = Nbr;
-	couts +=	Gabriele(p, val, Nbr, L, L0, e, l, epsilon);
+	CoutG = Nbr;
+	CoutG +=	Gabriele(p, val, Nbr, L, L0, e, l, epsilon);
 
 	SolNim Release;
 	Release.Init();
-
-	int j;
-
-	int D;
-	Release.get_Dim(D);
-	VectorXd b(D);
-
-	double dt = 1;
-
 	for(int i = 1; i < Nbr; i++)
 	{
-		j = 1;
-		Release.Rpos(L,L0);
-
-		do
-		{
-			dt = 0.2/j;
-			Release.SteepDescent(dt);
-			Release.get_b(b);
-			j++;
-		}
-		while(b.norm() < epsilon);
-		Ntot += j;
+		CoutR += Steepdes(Release, L, L0, epsilon);
 	}
-	cout << Ntot <<" "<< couts << endl;
 }
 
 
 
 int main()
 {
-	int NRe = 0;
-	int NRa = 0;
-	FindStep(NRe, NRa, 10);
+	ostringstream filename;
+	filename << "/home/yohan/Bureau/NiMFunder/Results/FindStep.res";
+	ofstream file(filename.str().c_str());
+
+	int CoutR;
+	int CoutG;
+	int D = 2;
+	double L = 100;
+	double L0 = 0;
+	double sigma = 3.5;
+	double H = -4;
+	double H0 = -12;
+	double sigma0 = 0.5;
+	int CTotR = 0;
+	int CTotG = 0;
+	for(int i = 0; i < 100; i++)
+	{
+		CTotR = 0;
+		CTotG = 0;
+		GenPays(D, 1+i, L, L0, sigma, sigma0, H, H0);
+		for(int j = 0; j < 100; j++)
+		{
+			CoutR = 0;
+			CoutG = 0;
+			cout << "TEST" << endl;
+			FindStep(CoutR, CoutG, L, L0);
+			CTotR += CoutR;
+			CTotG += CoutG;
+    	}
+
+    	file << (i+1) << " " << CTotR/100. << " " << CTotG/100. << endl;
+    }
+
     return 0;
 }

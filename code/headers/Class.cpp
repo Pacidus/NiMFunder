@@ -241,5 +241,5 @@ void SolNim::SteepDescent(double dt)
     (équlibre en quasi statique sum(F)=0)*/
 
 	df();			//On génère le vécteur de la dérivée première
-	p = p - b.normalized()*dt;
+	p -= b.normalized()*dt;
 }
