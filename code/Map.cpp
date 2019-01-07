@@ -17,7 +17,7 @@ int main()
 
 	ofstream file(filename.str().c_str());
 
-	int n = 1000;
+	int n = 60;
 	double a, c;
 	a = 100./n;
 	c = 0;
@@ -29,6 +29,8 @@ int main()
 		{
 			p(1) = a*i+c;
 			PayF.set_pos(p);
+			PayF.Rpos(a,c);
+			PayF.get_pos(p);
 			file << p.transpose() << " " << PayF.landscape() << endl;
 		}
 		file << endl;

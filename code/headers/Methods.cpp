@@ -140,7 +140,7 @@ int release(VectorXd p[], double val[], int Nbr, double epsilon)
 			Release.get_b(b);
 			j++;
 		}
-		while(b.norm() > epsilon);
+		while(b.norm() > epsilon and j > 1001);
 
 		Ntot += (j-1);
 	}
@@ -191,7 +191,7 @@ int Steepdes(SolNim Release, double L, double L0, double epsilon)
 		Release.get_b(b);
 		j++;
 	}
-	while(b.norm() > epsilon);
+	while(b.norm() > epsilon and j > 1001);
 
 	return j-1;
 }

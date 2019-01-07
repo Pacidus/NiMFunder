@@ -39,22 +39,22 @@ int main()
 	double sigma0 = 0.5;
 	int CTotR = 0;
 	int CTotG = 0;
-	for(int i = 0; i < 100; i++)
+	for(int i = 0; i < 100; i+=10)
 	{
 		CTotR = 0;
 		CTotG = 0;
 		GenPays(D, 1+i, L, L0, sigma, sigma0, H, H0);
-		for(int j = 0; j < 100; j++)
+		for(int j = 0; j < (1000-i*10); j++)
 		{
 			CoutR = 0;
 			CoutG = 0;
-			cout << "TEST" << endl;
+			cout << j/10. << endl;
 			FindStep(CoutR, CoutG, L, L0);
 			CTotR += CoutR;
 			CTotG += CoutG;
     	}
 
-    	file << (i+1) << " " << CTotR/100. << " " << CTotG/100. << endl;
+    	file << (i+1) << " " << CTotR/(1000.-i*10) << " " << CTotG/(1000.-i*10) << endl;
     }
 
     return 0;
