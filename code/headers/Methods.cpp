@@ -135,7 +135,7 @@ int release(VectorXd p[], double val[], int Nbr, double epsilon)
 
 		do
 		{
-			dt = 2./j;
+			dt = .2/j;
 			Release.SteepDescent(dt);
 			Release.get_b(b);
 			j++;

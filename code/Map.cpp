@@ -35,5 +35,6 @@ int main()
 		}
 		file << endl;
 	}
+	file.close();
     return 0;
 }

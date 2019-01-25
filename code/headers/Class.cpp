@@ -9,8 +9,8 @@
 
 double SolNim::alea()
 {
-	/*alea: retourne un double aléatoirement entre [0,1]*/
-    return rand()/(RAND_MAX+1.0);
+	/*alea: retourne un double aléatoirement entre [0,1[*/
+    return rand()/(RAND_MAX+1.0); // rand() -> [0,RAND_MAX[
 }//alea
 
 /*============================================================================*/
@@ -20,36 +20,37 @@ double SolNim::DGauss(VectorXd& P, VectorXd& sigma, double A)
 	/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
     dont le l'extremum se situe à là position P et à la hauteur A*/
 
-    VectorXd r = (p-P).array()/sigma.array();
-    r = r.array()*r.array();
-    double arg = r.sum();
+    VectorXd r = (p-P).array()/sigma.array(); /* On gen le vecteur de la dist du
+    											 point au minima que l'on divise
+    											 par le vecteur des ecarts-types
+    										  */
 
-    return A*exp(-arg/2);
+    r = r.array()*r.array(); 	/* On génère r^2 */
+    double arg = r.sum();		/* On génère l'argument de l'exponentielle
+    							   (gaussiènne) */
+
+    return A*exp(-arg/2); /* On retourne la valeur de la gaussiènne */
 }//DGauss
 
-double SolNim::xDGauss(VectorXd& P, VectorXd& sigma, double A)
+double SolNim::dDGauss(VectorXd& P, VectorXd& sigma, double A, int d)
 {
-	/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
-    dont le l'extremum se situe à là position P et à la hauteur A*/
+	/*
+	dDGauss: retourne la valeur de la dérivée d'une gaussienne à la position p a
+	D dimensions dont le l'extremum se situe à là position P et à la hauteur A
+	dérivée selon l'axe d
+	*/
 
-    VectorXd r = (p-P).array()/sigma.array();
-    r = r.array()*r.array();
-    double arg = r.sum();
+    VectorXd r = (p-P).array()/sigma.array(); /* On gen le vecteur de la dist du
+    											 point au minima que l'on divise
+    											 par le vecteur des ecarts-types
+    										  */
+    r = r.array()*r.array();				  /* On génère r^2 */
+    double arg = r.sum();	/* On génère l'argument de l'exponentielle
+    						   (gaussiènne) */
 
-    return -A*((p-P)(0)/(sigma(0)*sigma(0)))*exp(-arg/2);
-}//xDGauss
-
-double SolNim::yDGauss(VectorXd& P, VectorXd& sigma, double A)
-{
-	/*DGauss: retourne la valeur d'une gaussienne à la position p a D dimensions
-    dont le l'extremum se situe à là position P et à la hauteur A*/
-
-    VectorXd r = (p-P).array()/sigma.array();
-    r = r.array()*r.array();
-    double arg = r.sum();
-
-    return -A*((p-P)(1)/(sigma(1)*sigma(1)))*exp(-arg/2);
-}//yDGauss
+    return -A*(r(d)/(p-P)(d))*exp(-arg/2);
+    /* On retourne la valeur de la dérivée de la gaussiènne */
+}//dDGauss
 
 /*============================================================================*/
 								/*Public func*/
@@ -59,10 +60,12 @@ double SolNim::yDGauss(VectorXd& P, VectorXd& sigma, double A)
 /*====================================Init====================================*/
 SolNim::SolNim()
 {
+	/*SolNim: /!\ constructeur de la classe */
 }
 
 void SolNim::Init()
 {
+	/*Init: Initialise les valeurs de SolNim */
 
 	ifstream Initialiser("/home/yohan/Bureau/NiMFunder/Paysage.init");
 
@@ -220,8 +223,7 @@ double SolNim::dlandscape(int d)
     {
         P = Ps.col(i);
         sigma = Sigma.col(i);
-        if(d == 0) Sol += xDGauss(P, sigma, H(i));
-        if(d == 1) Sol += yDGauss(P, sigma, H(i));
+        Sol += dDGauss(P, sigma, H(i), d);
     }
     return Sol;
 }//dlandscape
@@ -229,16 +231,17 @@ double SolNim::dlandscape(int d)
 void SolNim::df()
 {
 	/*df: Génère le vecteur des dérivée premières*/
-    b(0) = dlandscape(0);
-    b(1) = dlandscape(1);
+	for(int i = 0; i < D; i++)
+	{
+    	b(i) = dlandscape(i);
+    }
 }
 
  /*==================================Méthodes=================================*/
 
 void SolNim::SteepDescent(double dt)
 {
-    /*Descent: aplique une méthode classique pour trouver le minima
-    (équlibre en quasi statique sum(F)=0)*/
+    /*SteepDescent: On ce déplace d'un pas de longueur dt selon la dérivée*/
 
 	df();			//On génère le vécteur de la dérivée première
 	p -= b.normalized()*dt;
