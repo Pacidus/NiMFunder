@@ -81,43 +81,43 @@ void toclose(VectorXd p[], double val[], int& Nbr, double l)
 {
 	/*toclose: 3ème étape de la méthode de Gabriele rejeter tous les points qui
 	sont trop "proches" les un des autres*/
-	VectorXd palt[Nbr];
-	double valt[Nbr];
-	int N = 0;
-	bool k = 1;
-	for(int i = 0; i < Nbr; i++)
+	VectorXd palt[Nbr];		//On crée une nouvelle liste de vecteur position
+	double valt[Nbr];		//On crée une nouvelle liste de valeurs
+	int N = 0;				//On initie le nombre de valeur dans les listes à 0
+	bool k = 1;				//Booléen il est le plus faible de ces voisins
+	for(int i = 0; i < Nbr; i++) //Pour tous les éléments de la liste
 	{
-		k = 1;
-		for(int j = 0; j < Nbr; j ++)
+		k = 1;					 //On considère vrai jusqu'à preuve du contraire
+		for(int j = 0; j < Nbr; j ++)	//Pour tous les éléments de la liste
 		{
-			if((p[i]-p[j]).norm() < l)
+			if(val[i] > val[j]) //si la valeur de i est sup a j
 			{
-				if(val[i] > val[j])
+				if((p[i]-p[j]).norm() < l) //Et que leurs distances est faible
 				{
-					k = 0;
-					break;
+					k = 0;		//Il n'est pas un point valide
+					break;		//On sort de la boucle
 				}
 			}
 		}
-		if(k)
+		if(k)	//Si le point verifie les conditions alors
 		{
-			palt[N] = p[i];
-			valt[N] = val[i];
-			N++;
+			palt[N] = p[i]; 	//On conserve sa position
+			valt[N] = val[i];	//On conserve sa valeur
+			N++;				//On as donc un élément en plus
 		}
 	}
 
-	Nbr = N;
-	VectorXd palt2[Nbr];
-	double valt2[Nbr];
+	Nbr = N;						//On met à jour
+	VectorXd palt2[Nbr];			//On met à jour
+	double valt2[Nbr];				//On met à jour
 
-	for(int i = 0; i < Nbr; i++)
+	for(int i = 0; i < Nbr; i++)	//On met à jour
 	{
-		palt2[i] = palt[i];
-		valt2[i] = valt[i];
+		palt2[i] = palt[i];			//On met à jour
+		valt2[i] = valt[i];			//On met à jour
 	}
-	p = palt2;
-	val = valt2;
+	p = palt2;						//On met à jour
+	val = valt2;					//On met à jour
 }//toclose
 
 int release(VectorXd p[], double val[], int Nbr, double epsilon)
