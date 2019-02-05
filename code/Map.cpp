@@ -13,7 +13,7 @@ int main()
 	VectorXd p(D);
 	ostringstream filename;
 
-	filename << "/home/yohan/Bureau/NiMFunder/Results/Min" << N << "Dim" << D << "Map.res";
+	filename << "../Results/Min" << N << "Dim" << D << "Map.res";
 
 	ofstream file(filename.str().c_str());
 

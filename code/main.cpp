@@ -25,7 +25,7 @@ void FindStep(int& CoutR,int& CoutG, double L, double L0)
 int main()
 {
 	ostringstream filename;
-	filename << "/home/yohan/Bureau/NiMFunder/Results/FindStep.res";
+	filename << "../Results/FindStep.res";
 	ofstream file(filename.str().c_str());
 
 	int CoutR;
