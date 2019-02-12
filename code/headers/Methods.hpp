@@ -1,4 +1,4 @@
-/* on importe nos Lib*/
+/*On importe nos Lib*/
 #include "Class.hpp" //On importe la classe SolNim
 
 int Gabriele(VectorXd p[], double val[], int& Nbr, double L, double L0, double e, double l, double epsilon);

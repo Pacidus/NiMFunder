@@ -1,4 +1,4 @@
-/* on importe nos Lib*/
+/*On importe nos Lib*/
 #include "headers/Methods.hpp"
 
 void FindStep(int& CoutR,int& CoutG, double L, double L0)
@@ -34,9 +34,9 @@ int main()
 	double L = 100;
 	double L0 = 0;
 	double sigma = 5.5;
+	double sigma0 = 1.;
 	double H = -4;
 	double H0 = -5;
-	double sigma0 = 1.;
 	double CTotR = 0;
 	double CTotG = 0;
 	ArrayXd Rval(100);

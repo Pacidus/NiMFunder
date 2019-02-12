@@ -1,4 +1,4 @@
-/* on importe nos Lib*/
+/*On importe nos Lib*/
 #include "Methods.hpp"
 
 /*=============================Méthode de Gabriele============================*/
@@ -107,17 +107,17 @@ void toclose(VectorXd p[], double val[], int& Nbr, double l)
 		}
 	}
 
-	Nbr = N;						//On met à jour
-	VectorXd palt2[Nbr];			//On met à jour
-	double valt2[Nbr];				//On met à jour
+	Nbr = N;						//On met à jour la valeur de Nbr
+	VectorXd palt2[Nbr];			//On gen les valeurs de p
+	double valt2[Nbr];				//On gen les valeurs de val
 
-	for(int i = 0; i < Nbr; i++)	//On met à jour
+	for(int i = 0; i < Nbr; i++)	//On met à jour les valeurs de p & val
 	{
-		palt2[i] = palt[i];			//On met à jour
-		valt2[i] = valt[i];			//On met à jour
+		palt2[i] = palt[i];			//On met à jour les valeurs de p
+		valt2[i] = valt[i];			//On met à jour les valeurs de val
 	}
-	p = palt2;						//On met à jour
-	val = valt2;					//On met à jour
+	p = palt2;						//On met à jour p
+	val = valt2;					//On met à jour val
 }//toclose
 
 int release(VectorXd p[], double val[], int Nbr, double epsilon)

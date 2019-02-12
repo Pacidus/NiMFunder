@@ -1,9 +1,12 @@
 CC      = g++
 CFLAGS  = -Ofast -W -Wall -Wextra -DNDEBUG
-
 DEPS    = headers/Class.hpp headers/Methods.hpp
-SSOURCES = main.cpp $(DEPS:.hpp=.cpp)
-SOBJ = $(SSOURCES:.cpp=.o)
+
+ASOURCES = AIRSS.cpp $(DEPS:.hpp=.cpp)
+AOBJ = $(ASOURCES:.cpp=.o)
+
+GSOURCES = Gabrielle.cpp $(DEPS:.hpp=.cpp)
+GOBJ = $(GSOURCES:.cpp=.o)
 
 MSOURCES = Map.cpp $(DEPS:.hpp=.cpp)
 MOBJ = $(MSOURCES:.cpp=.o)
@@ -13,166 +16,181 @@ MOBJ = $(MSOURCES:.cpp=.o)
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-Sim: $(SOBJ)
-	$(CC) -o ../$@ $(SOBJ) $(CFLAGS)
-
 Map: $(MOBJ)
+	makedepend $(MSOURCES)
 	$(CC) -o ../$@ $(MOBJ) $(CFLAGS)
 
+AIRSS: $(AOBJ)
+	makedepend $(ASOURCES)
+	$(CC) -o ../$@ $(AOBJ) $(CFLAGS)
+
+Gabrielle: $(GOBJ)
+	makedepend $(GSOURCES)
+	$(CC) -o ../$@ $(GOBJ) $(CFLAGS)
+
+Sim:
+	make AIRSS
+	make Gabrielle
+	make Map
+
 clean:
-	rm -f ∗~ $(MOBJ) $(SOBJ) ∗.bak
-
-Sdepend:
-	makedepend $(SSOURCES)
-
-Mdepend:
-	makedepend $(MSOURCES)
+	rm -f ∗~ $(MOBJ) $(AOBJ) $(GOBJ) ∗.bak
 
 # DO NOT DELETE
 
-main.o: headers/Methods.hpp headers/Class.hpp headers/Eigen/Dense
-main.o: headers/Eigen/Core
-main.o: headers/Eigen/src/Core/util/DisableStupidWarnings.h
-main.o: headers/Eigen/src/Core/util/Macros.h
-main.o: headers/Eigen/src/Core/util/MKL_support.h
-main.o: headers/Eigen/src/Core/util/Constants.h
-main.o: headers/Eigen/src/Core/util/Meta.h
-main.o: headers/Eigen/src/Core/util/ForwardDeclarations.h
-main.o: headers/Eigen/src/Core/util/StaticAssert.h
-main.o: headers/Eigen/src/Core/util/XprHelper.h
-main.o: headers/Eigen/src/Core/util/Memory.h
-main.o: headers/Eigen/src/Core/NumTraits.h
-main.o: headers/Eigen/src/Core/MathFunctions.h
-main.o: headers/Eigen/src/Core/GenericPacketMath.h
-main.o: headers/Eigen/src/Core/MathFunctionsImpl.h
-main.o: headers/Eigen/src/Core/arch/Default/ConjHelper.h
-main.o: headers/Eigen/src/Core/arch/CUDA/Half.h
-main.o: headers/Eigen/src/Core/arch/CUDA/PacketMathHalf.h
-main.o: headers/Eigen/src/Core/arch/CUDA/TypeCasting.h
-main.o: headers/Eigen/src/Core/arch/Default/Settings.h
-main.o: headers/Eigen/src/Core/functors/TernaryFunctors.h
-main.o: headers/Eigen/src/Core/functors/BinaryFunctors.h
-main.o: headers/Eigen/src/Core/functors/UnaryFunctors.h
-main.o: headers/Eigen/src/Core/functors/NullaryFunctors.h
-main.o: headers/Eigen/src/Core/functors/StlFunctors.h
-main.o: headers/Eigen/src/Core/functors/AssignmentFunctors.h
-main.o: headers/Eigen/src/Core/arch/CUDA/Complex.h
-main.o: headers/Eigen/src/Core/IO.h headers/Eigen/src/Core/DenseCoeffsBase.h
-main.o: headers/Eigen/src/Core/DenseBase.h
-main.o: headers/Eigen/src/plugins/BlockMethods.h
-main.o: headers/Eigen/src/Core/MatrixBase.h
-main.o: headers/Eigen/src/plugins/CommonCwiseUnaryOps.h
-main.o: headers/Eigen/src/plugins/CommonCwiseBinaryOps.h
-main.o: headers/Eigen/src/plugins/MatrixCwiseUnaryOps.h
-main.o: headers/Eigen/src/plugins/MatrixCwiseBinaryOps.h
-main.o: headers/Eigen/src/Core/EigenBase.h headers/Eigen/src/Core/Product.h
-main.o: headers/Eigen/src/Core/CoreEvaluators.h
-main.o: headers/Eigen/src/Core/AssignEvaluator.h
-main.o: headers/Eigen/src/Core/Assign.h headers/Eigen/src/Core/ArrayBase.h
-main.o: headers/Eigen/src/plugins/ArrayCwiseUnaryOps.h
-main.o: headers/Eigen/src/plugins/ArrayCwiseBinaryOps.h
-main.o: headers/Eigen/src/Core/util/BlasUtil.h
-main.o: headers/Eigen/src/Core/DenseStorage.h
-main.o: headers/Eigen/src/Core/NestByValue.h
-main.o: headers/Eigen/src/Core/ReturnByValue.h
-main.o: headers/Eigen/src/Core/NoAlias.h
-main.o: headers/Eigen/src/Core/PlainObjectBase.h
-main.o: headers/Eigen/src/Core/Matrix.h headers/Eigen/src/Core/Array.h
-main.o: headers/Eigen/src/Core/CwiseTernaryOp.h
-main.o: headers/Eigen/src/Core/CwiseBinaryOp.h
-main.o: headers/Eigen/src/Core/CwiseUnaryOp.h
-main.o: headers/Eigen/src/Core/CwiseNullaryOp.h
-main.o: headers/Eigen/src/Core/CwiseUnaryView.h
-main.o: headers/Eigen/src/Core/SelfCwiseBinaryOp.h
-main.o: headers/Eigen/src/Core/Dot.h headers/Eigen/src/Core/StableNorm.h
-main.o: headers/Eigen/src/Core/Stride.h headers/Eigen/src/Core/MapBase.h
-main.o: headers/Eigen/src/Core/Map.h headers/Eigen/src/Core/Ref.h
-main.o: headers/Eigen/src/Core/Block.h headers/Eigen/src/Core/VectorBlock.h
-main.o: headers/Eigen/src/Core/Transpose.h
-main.o: headers/Eigen/src/Core/DiagonalMatrix.h
-main.o: headers/Eigen/src/Core/Diagonal.h
-main.o: headers/Eigen/src/Core/DiagonalProduct.h
-main.o: headers/Eigen/src/Core/Redux.h headers/Eigen/src/Core/Visitor.h
-main.o: headers/Eigen/src/Core/Fuzzy.h headers/Eigen/src/Core/Swap.h
-main.o: headers/Eigen/src/Core/CommaInitializer.h
-main.o: headers/Eigen/src/Core/GeneralProduct.h
-main.o: headers/Eigen/src/Core/Solve.h headers/Eigen/src/Core/Inverse.h
-main.o: headers/Eigen/src/Core/SolverBase.h
-main.o: headers/Eigen/src/Core/PermutationMatrix.h
-main.o: headers/Eigen/src/Core/Transpositions.h
-main.o: headers/Eigen/src/Core/TriangularMatrix.h
-main.o: headers/Eigen/src/Core/SelfAdjointView.h
-main.o: headers/Eigen/src/Core/products/GeneralBlockPanelKernel.h
-main.o: headers/Eigen/src/Core/products/Parallelizer.h
-main.o: headers/Eigen/src/Core/ProductEvaluators.h
-main.o: headers/Eigen/src/Core/products/GeneralMatrixVector.h
-main.o: headers/Eigen/src/Core/products/GeneralMatrixMatrix.h
-main.o: headers/Eigen/src/Core/SolveTriangular.h
-main.o: headers/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h
-main.o: headers/Eigen/src/Core/products/SelfadjointMatrixVector.h
-main.o: headers/Eigen/src/Core/products/SelfadjointMatrixMatrix.h
-main.o: headers/Eigen/src/Core/products/SelfadjointProduct.h
-main.o: headers/Eigen/src/Core/products/SelfadjointRank2Update.h
-main.o: headers/Eigen/src/Core/products/TriangularMatrixVector.h
-main.o: headers/Eigen/src/Core/products/TriangularMatrixMatrix.h
-main.o: headers/Eigen/src/Core/products/TriangularSolverMatrix.h
-main.o: headers/Eigen/src/Core/products/TriangularSolverVector.h
-main.o: headers/Eigen/src/Core/BandMatrix.h
-main.o: headers/Eigen/src/Core/CoreIterators.h
-main.o: headers/Eigen/src/Core/ConditionEstimator.h
-main.o: headers/Eigen/src/Core/BooleanRedux.h headers/Eigen/src/Core/Select.h
-main.o: headers/Eigen/src/Core/VectorwiseOp.h headers/Eigen/src/Core/Random.h
-main.o: headers/Eigen/src/Core/Replicate.h headers/Eigen/src/Core/Reverse.h
-main.o: headers/Eigen/src/Core/ArrayWrapper.h
-main.o: headers/Eigen/src/Core/GlobalFunctions.h
-main.o: headers/Eigen/src/Core/util/ReenableStupidWarnings.h headers/Eigen/LU
-main.o: headers/Eigen/src/misc/Kernel.h headers/Eigen/src/misc/Image.h
-main.o: headers/Eigen/src/LU/FullPivLU.h headers/Eigen/src/LU/PartialPivLU.h
-main.o: headers/Eigen/src/LU/Determinant.h headers/Eigen/src/LU/InverseImpl.h
-main.o: headers/Eigen/Cholesky headers/Eigen/Jacobi
-main.o: headers/Eigen/src/Jacobi/Jacobi.h headers/Eigen/src/Cholesky/LLT.h
-main.o: headers/Eigen/src/Cholesky/LDLT.h headers/Eigen/QR
-main.o: headers/Eigen/Householder headers/Eigen/src/Householder/Householder.h
-main.o: headers/Eigen/src/Householder/HouseholderSequence.h
-main.o: headers/Eigen/src/Householder/BlockHouseholder.h
-main.o: headers/Eigen/src/QR/HouseholderQR.h
-main.o: headers/Eigen/src/QR/FullPivHouseholderQR.h
-main.o: headers/Eigen/src/QR/ColPivHouseholderQR.h
-main.o: headers/Eigen/src/QR/CompleteOrthogonalDecomposition.h
-main.o: headers/Eigen/SVD headers/Eigen/src/misc/RealSvd2x2.h
-main.o: headers/Eigen/src/SVD/UpperBidiagonalization.h
-main.o: headers/Eigen/src/SVD/SVDBase.h headers/Eigen/src/SVD/JacobiSVD.h
-main.o: headers/Eigen/src/SVD/BDCSVD.h headers/Eigen/Geometry
-main.o: headers/Eigen/src/Geometry/OrthoMethods.h
-main.o: headers/Eigen/src/Geometry/EulerAngles.h
-main.o: headers/Eigen/src/Geometry/Homogeneous.h
-main.o: headers/Eigen/src/Geometry/RotationBase.h
-main.o: headers/Eigen/src/Geometry/Rotation2D.h
-main.o: headers/Eigen/src/Geometry/Quaternion.h
-main.o: headers/Eigen/src/Geometry/AngleAxis.h
-main.o: headers/Eigen/src/Geometry/Transform.h
-main.o: headers/Eigen/src/Geometry/Translation.h
-main.o: headers/Eigen/src/Geometry/Scaling.h
-main.o: headers/Eigen/src/Geometry/Hyperplane.h
-main.o: headers/Eigen/src/Geometry/ParametrizedLine.h
-main.o: headers/Eigen/src/Geometry/AlignedBox.h
-main.o: headers/Eigen/src/Geometry/Umeyama.h headers/Eigen/Eigenvalues
-main.o: headers/Eigen/src/Eigenvalues/Tridiagonalization.h
-main.o: headers/Eigen/src/Eigenvalues/RealSchur.h
-main.o: headers/Eigen/src/Eigenvalues/./HessenbergDecomposition.h
-main.o: headers/Eigen/src/Eigenvalues/EigenSolver.h
-main.o: headers/Eigen/src/Eigenvalues/./RealSchur.h
-main.o: headers/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
-main.o: headers/Eigen/src/Eigenvalues/./Tridiagonalization.h
-main.o: headers/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
-main.o: headers/Eigen/src/Eigenvalues/HessenbergDecomposition.h
-main.o: headers/Eigen/src/Eigenvalues/ComplexSchur.h
-main.o: headers/Eigen/src/Eigenvalues/ComplexEigenSolver.h
-main.o: headers/Eigen/src/Eigenvalues/./ComplexSchur.h
-main.o: headers/Eigen/src/Eigenvalues/RealQZ.h
-main.o: headers/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
-main.o: headers/Eigen/src/Eigenvalues/./RealQZ.h
-main.o: headers/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+Gabrielle.o: headers/Methods.hpp headers/Class.hpp headers/Eigen/Dense
+Gabrielle.o: headers/Eigen/Core
+Gabrielle.o: headers/Eigen/src/Core/util/DisableStupidWarnings.h
+Gabrielle.o: headers/Eigen/src/Core/util/Macros.h
+Gabrielle.o: headers/Eigen/src/Core/util/MKL_support.h
+Gabrielle.o: headers/Eigen/src/Core/util/Constants.h
+Gabrielle.o: headers/Eigen/src/Core/util/Meta.h
+Gabrielle.o: headers/Eigen/src/Core/util/ForwardDeclarations.h
+Gabrielle.o: headers/Eigen/src/Core/util/StaticAssert.h
+Gabrielle.o: headers/Eigen/src/Core/util/XprHelper.h
+Gabrielle.o: headers/Eigen/src/Core/util/Memory.h
+Gabrielle.o: headers/Eigen/src/Core/NumTraits.h
+Gabrielle.o: headers/Eigen/src/Core/MathFunctions.h
+Gabrielle.o: headers/Eigen/src/Core/GenericPacketMath.h
+Gabrielle.o: headers/Eigen/src/Core/MathFunctionsImpl.h
+Gabrielle.o: headers/Eigen/src/Core/arch/Default/ConjHelper.h
+Gabrielle.o: headers/Eigen/src/Core/arch/CUDA/Half.h
+Gabrielle.o: headers/Eigen/src/Core/arch/CUDA/PacketMathHalf.h
+Gabrielle.o: headers/Eigen/src/Core/arch/CUDA/TypeCasting.h
+Gabrielle.o: headers/Eigen/src/Core/arch/Default/Settings.h
+Gabrielle.o: headers/Eigen/src/Core/functors/TernaryFunctors.h
+Gabrielle.o: headers/Eigen/src/Core/functors/BinaryFunctors.h
+Gabrielle.o: headers/Eigen/src/Core/functors/UnaryFunctors.h
+Gabrielle.o: headers/Eigen/src/Core/functors/NullaryFunctors.h
+Gabrielle.o: headers/Eigen/src/Core/functors/StlFunctors.h
+Gabrielle.o: headers/Eigen/src/Core/functors/AssignmentFunctors.h
+Gabrielle.o: headers/Eigen/src/Core/arch/CUDA/Complex.h
+Gabrielle.o: headers/Eigen/src/Core/IO.h
+Gabrielle.o: headers/Eigen/src/Core/DenseCoeffsBase.h
+Gabrielle.o: headers/Eigen/src/Core/DenseBase.h
+Gabrielle.o: headers/Eigen/src/plugins/BlockMethods.h
+Gabrielle.o: headers/Eigen/src/Core/MatrixBase.h
+Gabrielle.o: headers/Eigen/src/plugins/CommonCwiseUnaryOps.h
+Gabrielle.o: headers/Eigen/src/plugins/CommonCwiseBinaryOps.h
+Gabrielle.o: headers/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+Gabrielle.o: headers/Eigen/src/plugins/MatrixCwiseBinaryOps.h
+Gabrielle.o: headers/Eigen/src/Core/EigenBase.h
+Gabrielle.o: headers/Eigen/src/Core/Product.h
+Gabrielle.o: headers/Eigen/src/Core/CoreEvaluators.h
+Gabrielle.o: headers/Eigen/src/Core/AssignEvaluator.h
+Gabrielle.o: headers/Eigen/src/Core/Assign.h
+Gabrielle.o: headers/Eigen/src/Core/ArrayBase.h
+Gabrielle.o: headers/Eigen/src/plugins/ArrayCwiseUnaryOps.h
+Gabrielle.o: headers/Eigen/src/plugins/ArrayCwiseBinaryOps.h
+Gabrielle.o: headers/Eigen/src/Core/util/BlasUtil.h
+Gabrielle.o: headers/Eigen/src/Core/DenseStorage.h
+Gabrielle.o: headers/Eigen/src/Core/NestByValue.h
+Gabrielle.o: headers/Eigen/src/Core/ReturnByValue.h
+Gabrielle.o: headers/Eigen/src/Core/NoAlias.h
+Gabrielle.o: headers/Eigen/src/Core/PlainObjectBase.h
+Gabrielle.o: headers/Eigen/src/Core/Matrix.h headers/Eigen/src/Core/Array.h
+Gabrielle.o: headers/Eigen/src/Core/CwiseTernaryOp.h
+Gabrielle.o: headers/Eigen/src/Core/CwiseBinaryOp.h
+Gabrielle.o: headers/Eigen/src/Core/CwiseUnaryOp.h
+Gabrielle.o: headers/Eigen/src/Core/CwiseNullaryOp.h
+Gabrielle.o: headers/Eigen/src/Core/CwiseUnaryView.h
+Gabrielle.o: headers/Eigen/src/Core/SelfCwiseBinaryOp.h
+Gabrielle.o: headers/Eigen/src/Core/Dot.h headers/Eigen/src/Core/StableNorm.h
+Gabrielle.o: headers/Eigen/src/Core/Stride.h headers/Eigen/src/Core/MapBase.h
+Gabrielle.o: headers/Eigen/src/Core/Map.h headers/Eigen/src/Core/Ref.h
+Gabrielle.o: headers/Eigen/src/Core/Block.h
+Gabrielle.o: headers/Eigen/src/Core/VectorBlock.h
+Gabrielle.o: headers/Eigen/src/Core/Transpose.h
+Gabrielle.o: headers/Eigen/src/Core/DiagonalMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/Diagonal.h
+Gabrielle.o: headers/Eigen/src/Core/DiagonalProduct.h
+Gabrielle.o: headers/Eigen/src/Core/Redux.h headers/Eigen/src/Core/Visitor.h
+Gabrielle.o: headers/Eigen/src/Core/Fuzzy.h headers/Eigen/src/Core/Swap.h
+Gabrielle.o: headers/Eigen/src/Core/CommaInitializer.h
+Gabrielle.o: headers/Eigen/src/Core/GeneralProduct.h
+Gabrielle.o: headers/Eigen/src/Core/Solve.h headers/Eigen/src/Core/Inverse.h
+Gabrielle.o: headers/Eigen/src/Core/SolverBase.h
+Gabrielle.o: headers/Eigen/src/Core/PermutationMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/Transpositions.h
+Gabrielle.o: headers/Eigen/src/Core/TriangularMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/SelfAdjointView.h
+Gabrielle.o: headers/Eigen/src/Core/products/GeneralBlockPanelKernel.h
+Gabrielle.o: headers/Eigen/src/Core/products/Parallelizer.h
+Gabrielle.o: headers/Eigen/src/Core/ProductEvaluators.h
+Gabrielle.o: headers/Eigen/src/Core/products/GeneralMatrixVector.h
+Gabrielle.o: headers/Eigen/src/Core/products/GeneralMatrixMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/SolveTriangular.h
+Gabrielle.o: headers/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h
+Gabrielle.o: headers/Eigen/src/Core/products/SelfadjointMatrixVector.h
+Gabrielle.o: headers/Eigen/src/Core/products/SelfadjointMatrixMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/products/SelfadjointProduct.h
+Gabrielle.o: headers/Eigen/src/Core/products/SelfadjointRank2Update.h
+Gabrielle.o: headers/Eigen/src/Core/products/TriangularMatrixVector.h
+Gabrielle.o: headers/Eigen/src/Core/products/TriangularMatrixMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/products/TriangularSolverMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/products/TriangularSolverVector.h
+Gabrielle.o: headers/Eigen/src/Core/BandMatrix.h
+Gabrielle.o: headers/Eigen/src/Core/CoreIterators.h
+Gabrielle.o: headers/Eigen/src/Core/ConditionEstimator.h
+Gabrielle.o: headers/Eigen/src/Core/BooleanRedux.h
+Gabrielle.o: headers/Eigen/src/Core/Select.h
+Gabrielle.o: headers/Eigen/src/Core/VectorwiseOp.h
+Gabrielle.o: headers/Eigen/src/Core/Random.h
+Gabrielle.o: headers/Eigen/src/Core/Replicate.h
+Gabrielle.o: headers/Eigen/src/Core/Reverse.h
+Gabrielle.o: headers/Eigen/src/Core/ArrayWrapper.h
+Gabrielle.o: headers/Eigen/src/Core/GlobalFunctions.h
+Gabrielle.o: headers/Eigen/src/Core/util/ReenableStupidWarnings.h
+Gabrielle.o: headers/Eigen/LU headers/Eigen/src/misc/Kernel.h
+Gabrielle.o: headers/Eigen/src/misc/Image.h headers/Eigen/src/LU/FullPivLU.h
+Gabrielle.o: headers/Eigen/src/LU/PartialPivLU.h
+Gabrielle.o: headers/Eigen/src/LU/Determinant.h
+Gabrielle.o: headers/Eigen/src/LU/InverseImpl.h headers/Eigen/Cholesky
+Gabrielle.o: headers/Eigen/Jacobi headers/Eigen/src/Jacobi/Jacobi.h
+Gabrielle.o: headers/Eigen/src/Cholesky/LLT.h
+Gabrielle.o: headers/Eigen/src/Cholesky/LDLT.h headers/Eigen/QR
+Gabrielle.o: headers/Eigen/Householder
+Gabrielle.o: headers/Eigen/src/Householder/Householder.h
+Gabrielle.o: headers/Eigen/src/Householder/HouseholderSequence.h
+Gabrielle.o: headers/Eigen/src/Householder/BlockHouseholder.h
+Gabrielle.o: headers/Eigen/src/QR/HouseholderQR.h
+Gabrielle.o: headers/Eigen/src/QR/FullPivHouseholderQR.h
+Gabrielle.o: headers/Eigen/src/QR/ColPivHouseholderQR.h
+Gabrielle.o: headers/Eigen/src/QR/CompleteOrthogonalDecomposition.h
+Gabrielle.o: headers/Eigen/SVD headers/Eigen/src/misc/RealSvd2x2.h
+Gabrielle.o: headers/Eigen/src/SVD/UpperBidiagonalization.h
+Gabrielle.o: headers/Eigen/src/SVD/SVDBase.h
+Gabrielle.o: headers/Eigen/src/SVD/JacobiSVD.h headers/Eigen/src/SVD/BDCSVD.h
+Gabrielle.o: headers/Eigen/Geometry headers/Eigen/src/Geometry/OrthoMethods.h
+Gabrielle.o: headers/Eigen/src/Geometry/EulerAngles.h
+Gabrielle.o: headers/Eigen/src/Geometry/Homogeneous.h
+Gabrielle.o: headers/Eigen/src/Geometry/RotationBase.h
+Gabrielle.o: headers/Eigen/src/Geometry/Rotation2D.h
+Gabrielle.o: headers/Eigen/src/Geometry/Quaternion.h
+Gabrielle.o: headers/Eigen/src/Geometry/AngleAxis.h
+Gabrielle.o: headers/Eigen/src/Geometry/Transform.h
+Gabrielle.o: headers/Eigen/src/Geometry/Translation.h
+Gabrielle.o: headers/Eigen/src/Geometry/Scaling.h
+Gabrielle.o: headers/Eigen/src/Geometry/Hyperplane.h
+Gabrielle.o: headers/Eigen/src/Geometry/ParametrizedLine.h
+Gabrielle.o: headers/Eigen/src/Geometry/AlignedBox.h
+Gabrielle.o: headers/Eigen/src/Geometry/Umeyama.h headers/Eigen/Eigenvalues
+Gabrielle.o: headers/Eigen/src/Eigenvalues/Tridiagonalization.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/RealSchur.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/./HessenbergDecomposition.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/EigenSolver.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/./RealSchur.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/./Tridiagonalization.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/ComplexSchur.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/./ComplexSchur.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/RealQZ.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/./RealQZ.h
+Gabrielle.o: headers/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
 headers/Class.o: headers/Class.hpp headers/Eigen/Dense headers/Eigen/Core
 headers/Class.o: headers/Eigen/src/Core/util/DisableStupidWarnings.h
 headers/Class.o: headers/Eigen/src/Core/util/Macros.h
