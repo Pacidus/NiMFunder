@@ -4,7 +4,7 @@
 int main()
 {
 	ostringstream filename;
-	filename << "../Results/Gabrielle.res";
+	filename << "../Results/Gabrielle.csv";
 	ofstream file(filename.str().c_str());
 
 	return 0;

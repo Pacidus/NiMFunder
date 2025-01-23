@@ -13,7 +13,7 @@ int main()
 	VectorXd p(D);
 	ostringstream filename;
 
-	filename << "../Results/Min" << N << "Dim" << D << "Map.res";
+	filename << "../Results/Min" << N << "Dim" << D << "Map.csv";
 
 	ofstream file(filename.str().c_str());
 

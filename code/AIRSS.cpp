@@ -55,7 +55,7 @@ void New(MatrixXd& Min, VectorXi& T, VectorXd p)
 int main()
 {
 	ostringstream filename;					//Stream
-	filename << "../Results/AIRSS.res";		//Nom du fichier
+	filename << "../Results/AIRSS.csv";		//Nom du fichier
 	ofstream file(filename.str().c_str()); 	//Fichier de stockage
 
 	int Rep = 100;			//Nombre de répétition
